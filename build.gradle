@@ -12,12 +12,22 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile 'org.openjdk.jmh:jmh-core:1.21'
-    compileOnly 'org.openjdk.jmh:jmh-generator-annprocess:1.21'
-    compile 'io.vertx:vertx-core:3.5.3'
-    compile 'org.codehaus.groovy:groovy-json:2.5.0'
-    compile 'com.jsoniter:jsoniter:0.9.19'
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.openjdk.jmh.Main'
+    }
+}
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+jmh {
+    fork = 1
+    humanOutputFile = null
+    warmupIterations = 1
+    iterations = 1
+}
+
+dependencies {
+    jmh 'io.vertx:vertx-core:3.5.3'
+    jmh 'org.codehaus.groovy:groovy-json:2.5.0'
+    jmh 'com.jsoniter:jsoniter:0.9.19'
 }
