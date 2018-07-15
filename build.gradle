@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "me.champeau.gradle.jmh" version "0.4.7"
+    id "com.github.johnrengelman.shadow" version "2.0.4"
 }
 
 group 'com.aruistar.benchmark'
@@ -14,20 +15,27 @@ repositories {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'org.openjdk.jmh.Main'
+        attributes 'Main-Class': 'com.aruistar.benchmark.RootBench'
     }
 }
 
-
 jmh {
-    fork = 1
+    batchSize = 2
+    fork = 4
     humanOutputFile = null
     warmupIterations = 1
     iterations = 1
 }
 
 dependencies {
-    jmh 'io.vertx:vertx-core:3.5.3'
-    jmh 'org.codehaus.groovy:groovy-json:2.5.0'
-    jmh 'com.jsoniter:jsoniter:0.9.19'
+    compile 'org.openjdk.jmh:jmh-core:1.21'
+    compileOnly 'org.openjdk.jmh:jmh-generator-annprocess:1.21'
+
+    compile 'org.codehaus.groovy:groovy-sql:2.5.1'
+    compile group: 'com.alibaba', name: 'druid', version: '1.1.10'
+
+
+
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.1'
+
 }
